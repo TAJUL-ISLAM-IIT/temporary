@@ -9,36 +9,36 @@ $success_message = '';
 
 <?php
 if (isset($_POST['form_login'])) {
-	if ($_POST['user_email'] == '' || $_POST['user_password'] == '') {
-		$error_message = 'Please give the correct email and password';
-	} else {
-		$q = $pdo->prepare("
+    if ($_POST['user_email'] == '' || $_POST['user_password'] == '') {
+        $error_message = 'Please give the correct email and password';
+    } else {
+        $q = $pdo->prepare("
 					SELECT * 
 					FROM user 
 					WHERE user_email=?
 				");
-		$q->execute([$_POST['user_email']]);
-		$res = $q->fetchAll();
-		$total = $q->rowCount();
+        $q->execute([$_POST['user_email']]);
+        $res = $q->fetchAll();
+        $total = $q->rowCount();
 
-		if ($total) {
-			foreach ($res as $row) {
-				$stored_password = $row['user_password'];
-			}
+        if ($total) {
+            foreach ($res as $row) {
+                $stored_password = $row['user_password'];
+            }
 
-			if (md5($_POST['user_password']) == $stored_password) {
-				// Everything is fine!
-				$_SESSION['user'] = $row;
+            if (md5($_POST['user_password']) == $stored_password) {
+                // Everything is fine!
+                $_SESSION['user'] = $row;
 
-				header('location: index.php');
-				exit;
-			} else {
-				$error_message = 'Please give the correct email and password';
-			}
-		} else {
-			$error_message = 'Please give the correct email and password';
-		}
-	}
+                header('location: index.php');
+                exit;
+            } else {
+                $error_message = 'Please give the correct email and password';
+            }
+        } else {
+            $error_message = 'Please give the correct email and password';
+        }
+    }
 }
 ?>
 
@@ -53,7 +53,7 @@ if (isset($_POST['form_login'])) {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Admin Log In</title>
+    <title>SB Admin 2 - Bootstrap Admin Theme</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
@@ -69,9 +69,10 @@ if (isset($_POST['form_login'])) {
 
 </head>
 
-<body>
+<body style="background:url(assets/img/ok.jpg);background-repeat:no-repeat;height:200px;width:800px;">
 
     <div class="container">
+        <!-- <img src="assets/img/ok.jpg"> -->
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-default">
@@ -81,10 +82,10 @@ if (isset($_POST['form_login'])) {
                     <div class="panel-body">
 
                         <?php
-						if ($error_message) {
-							echo '<div class="alert alert-danger">' . $error_message . '</div>';
-						}
-						?>
+                        if ($error_message) {
+                            echo '<div class="alert alert-danger">' . $error_message . '</div>';
+                        }
+                        ?>
 
                         <form role="form" action="" method="post">
                             <fieldset>
